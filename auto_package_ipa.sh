@@ -25,25 +25,26 @@ fi
 #unzip the IPA so we can re-build the .app
 unzip "${IPA}" -d "${TEMPDIR}"
 
-#delete the original IPA, so we can rewrite it later
+#rename the original IPA
 mv "${IPA}" "${IPA/.ipa/-original.ipa}"
 
-APP="${TEMPDIR}/Payload/$(ls ${TEMPDIR}/Payload/)"
-echo ${APP}
+APPFILE=$(ls "${TEMPDIR}/Payload/")
+APP="${TEMPDIR}/Payload/${APPFILE}"
+APPFRAMEWORKS="${APP}/Frameworks"
 
 #add the SwiftSupport requirement
-if [ -d "${APP}/Frameworks" ];
-then
-    mkdir -p "${TEMPDIR}/SwiftSupport"
+if [ -d "${APPFRAMEWORKS}" ]; then
 
-    for SWIFT_LIB in $(ls -1 "${APP}/Frameworks/"); do
-        echo "Copying ${SWIFT_LIB}"
-        cp "${DEVELOPER_DIR}/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/${SWIFT_LIB}" "${TEMPDIR}/SwiftSupport"
+	SWIFTSUPPORT="${TEMPDIR}/SwiftSupport"
+
+    mkdir -p "${SWIFTSUPPORT}"
+    for SWIFT_LIB in $(ls -1 "${APPFRAMEWORKS}"); do
+        cp "${DEVELOPER_DIR}/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/${SWIFT_LIB}" "${SWIFTSUPPORT}"
     done
 fi
 
 #zip the files, save the ipa and cleanup
 cd "${TEMPDIR}"
-zip --recurse-paths "${IPA}" .
+zip --symlinks --recurse-paths "${IPA}" .
 cd "${IPADIR}"
 rm -d -r "${TEMPDIR}"
