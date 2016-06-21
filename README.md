@@ -14,6 +14,6 @@ The script will output to MyApp.ipa and the original saved as MyApp-original.ipa
 This is a simplification of @bq ipa-packager which you can find here: https://github.com/bq/ipa-packager.  Many thanks!
 
 #Requirements
-*XCode 6+
-*XCode Command Line Tools
-*macOS Mavericks or Higher
+* XCode 6+
+* XCode Command Line Tools
+* macOS Mavericks or Higher
