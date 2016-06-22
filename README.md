@@ -10,6 +10,18 @@ Simply export your signed IPA from Xcode or Xamarin Studio, and then simply run 
 ```
 The script will output to MyApp.ipa and the original saved as MyApp-original.ipa.
 
+The output should be similar to:
+```shell
+	Unzipping the IPA archive...
+	Backed up original IPA to /path/to/MyApp-original.ipa
+	Copying Swift Support Requirements...
+	Zipping updated IPA archive...
+	Completed! Saved as /path/to/MyApp.ipa
+```
+
+#Debugging
+If you need to debug this script, remove all of the `>/dev/null` or `2>/dev/null` from the commands in the file.
+
 #Credit
 This is a simplification of @bq ipa-packager which you can find here: https://github.com/bq/ipa-packager.  Many thanks!
 
